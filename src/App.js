@@ -34,19 +34,6 @@ function App() {
         setList(items);
     }
 
-    const itemCheckHandler = (i) => {
-        setList(
-            list.map(
-                (j, k) =>
-                    k === i
-                        ? {
-                            ...j,
-                            itemClicked: !j.itemClicked
-                        }
-                        : j
-            )
-        )
-    };
 
   return (
       <>
