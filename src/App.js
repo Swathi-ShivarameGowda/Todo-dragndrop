@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './App.css';
+import { initialValue } from './constants'
 
 function App() {
     const [inputValue, setInputValue] = useState()
-    const [list, setList] = useState([]);
-    const [idValue, setIdvalue]=useState(0)
-    
+    const [list, setList] = useState(initialValue);
+    const [idValue, setIdvalue] = useState(3)
+
     const addItem = (item) => {
         if (item) {
             setIdvalue(idValue + 1);
@@ -16,13 +17,13 @@ function App() {
         }
     }
 
-    
+
 
     const removeItem = (item) => {
         let itemArray = Array.from(list);
         itemArray.splice(item, 1);
         setList(itemArray)
-   }
+    }
 
     function handleOnDragEnd(result) {
         if (!result.destination) return;
@@ -35,60 +36,56 @@ function App() {
     }
 
 
-  return (
-      <>
-          <div className="App">
-              <header className="App-header">
-                  <h1>Todo List</h1>
 
-                  <div className="Add">
-                      <input value={inputValue} onChange={e => setInputValue(e.target.value)} />
-                      <button onClick={() => addItem(inputValue)}>Add</button>
-                  </div>
-                  
-                  <DragDropContext onDragEnd={handleOnDragEnd}>
-                      <Droppable droppableId="list">
-                          {(provided) => (
+    return (
+        <>
+            <div className="App">
+                <header className="App-header">
+                    <h1>Todo Items</h1>
 
-                              <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+                    <div className="Add">
+                        <input value={inputValue} onChange={e => setInputValue(e.target.value)} />
+                        <button onClick={() => addItem(inputValue)}>Add</button>
+                    </div>
+                    <DragDropContext onDragEnd={handleOnDragEnd}>
+                        <Droppable droppableId="list">
+                            {(provided) => (
+                                <ul className="grid-container" {...provided.droppableProps} ref={provided.innerRef}>
 
-                                  {list.map(({item, id }, index) => {
-                                      
-                                  return (
-                                      <Draggable key={id} draggableId={id.toString()} index={index}>
-                                          {(provided) => (
-                                              <div className="item-ul">
+                                    {list.map(({ item, id }, index) => {
 
-                                              <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} key={id}>
-                                                
+                                        return (
+                                            <Draggable key={id} draggableId={id.toString()} index={index}>
+                                                {(provided) => (
+                                            <div className="grid-item">
+                                           
+                                                        <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} key={id}>
+                                                        <div className="characters-thumb">
+                                                        {item}
+                                                        </div>
+                                                        <button onClick={() => removeItem(index)}>Remove</button>
+                                                        </li>
 
-                                                  <div className="characters-thumb">
-
-                                                      {item}
-
-                                                  </div>
-                                                  <button onClick={() => removeItem(index)}>Remove</button>
+                                            </div>
 
 
-                                                  </li>
-                                              </div>
+                                                )}
+                                            </Draggable>
+                                            
+                                        )
 
-                                          )}
+                                    })}
+                                    {provided.placeholder}
+                                </ul>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
+                        
 
-                                      </Draggable>
-                                   );     
-
-                                      })}
-                                      {provided.placeholder}
-                              </ul>
-                                   )}
-                      </Droppable>
-                      </DragDropContext>
-                      
-              </header>
-          </div>
-      </>
-  );
+                </header>
+            </div>
+        </>
+    );
 }
 
 export default App;

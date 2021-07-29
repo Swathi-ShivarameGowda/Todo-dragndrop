@@ -28,20 +28,26 @@
     }
 }
 
-.item-ul ul{
-   
-    -moz-column-count: 4;
-    -moz-column-gap: 20px;
-    -webkit-column-count: 4;
-    -webkit-column-gap: 20px;
-    column-count: 4;
-    column-gap: 20px;
 
-}
 
 .characters {
+    padding-top: 60px;
     list-style: none;
     padding-left: 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+   list-style: none;
+    padding: 10px;
+}
+
+.grid-item {
+    
+    padding: 20px;
+    font-size: 20px;
+    text-align: center;
 }
 
     .characters li {
